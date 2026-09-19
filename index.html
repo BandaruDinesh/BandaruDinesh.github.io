@@ -21,7 +21,458 @@
     --max:920px;
   }
   *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dinesh Bandaru — Software Engineer</title>
+<meta name="description" content="Dinesh Bandaru — Software Engineer building scalable backend systems, cloud-native microservices, and AI-powered applications.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EFEEE9;
+    --paper-2:#E5E3DA;
+    --ink:#101014;
+    --ink-soft:#3A3A42;
+    --muted:#5B5B66;
+    --red:#D62839;
+    --indigo:#2B4C7E;
+    --panel:#FAFAF6;
+    --max:920px;
+  }
+  *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Work Sans",-apple-system,sans-serif;
+    font-size:17px;
+    line-height:1.6;
+  }
+  .display{font-family:"Bebas Neue",sans-serif; letter-spacing:0.01em;}
+  .mono{font-family:"IBM Plex Mono",monospace;}
+  a{color:inherit;}
+
+  /* --- Nav --- */
+  nav{
+    position:sticky; top:0; z-index:20;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px max(20px, calc((100% - var(--max)) / 2));
+    background:rgba(239,238,233,0.94);
+    backdrop-filter:blur(4px);
+    border-bottom:3px solid var(--ink);
+  }
+  .nav-mark{
+    font-family:"Bebas Neue",sans-serif;
+    font-size:1.5rem;
+    display:flex; align-items:center; gap:4px;
+    text-decoration:none;
+  }
+  .nav-mark .dot{width:9px;height:9px;background:var(--red);display:inline-block;}
+  .nav-links{display:none; gap:26px; font-size:14px; font-weight:600;}
+  .nav-links a{text-decoration:none; padding-bottom:2px; border-bottom:2px solid transparent;}
+  .nav-links a:hover{border-color:var(--red);}
+  @media (min-width:680px){ .nav-links{display:flex;} }
+
+  main{max-width:var(--max); margin:0 auto; padding:0 20px;}
+
+  /* --- Panel primitive: comic-panel look, hard offset shadow, no blur/radius --- */
+  .panel{
+    background:var(--panel);
+    border:3px solid var(--ink);
+    box-shadow:7px 7px 0 var(--ink);
+    padding:28px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .panel:hover{
+    transform:translate(-4px,-4px);
+    box-shadow:11px 11px 0 var(--ink);
+  }
+  .panel.panel-work:hover{ box-shadow:11px 11px 0 var(--indigo); }
+
+  /* --- Chapter tag: motivated by the content actually being a sequence --- */
+  .chapter-tag{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12.5px;
+    background:var(--ink);
+    color:var(--paper);
+    padding:5px 12px;
+    transform:skewX(-8deg);
+    margin-bottom:18px;
+  }
+  .chapter-tag span{display:inline-block; transform:skewX(8deg);}
+
+  /* --- Hero --- */
+  .hero{
+    padding:64px 0 60px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:3px solid var(--ink);
+    margin-bottom:0;
+  }
+  /* Full-bleed dot fade, not a floating box — reads as printed paper texture,
+     not a leftover decoration. */
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:radial-gradient(var(--ink) 1.4px, transparent 1.4px);
+    background-size:13px 13px;
+    background-position:top right;
+    -webkit-mask-image:linear-gradient(225deg, black 0%, black 18%, transparent 55%);
+    mask-image:linear-gradient(225deg, black 0%, black 18%, transparent 55%);
+    opacity:0.16;
+    z-index:0;
+    pointer-events:none;
+  }
+  .hero-inner{position:relative; z-index:1;}
+
+  /* One deliberate comic flourish: a starburst stamp, not scattered effects. */
+  .burst-badge{
+    position:absolute;
+    top:40px; right:max(20px, calc((100% - var(--max)) / 2 - 10px));
+    width:118px; height:118px;
+    z-index:2;
+    display:none;
+  }
+  @media (min-width:900px){ .burst-badge{display:block;} }
+  .burst-badge svg{width:100%; height:100%; filter:drop-shadow(4px 4px 0 var(--ink));}
+  .burst-badge .burst-text{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    font-family:"Bebas Neue",sans-serif;
+    color:var(--paper);
+    font-size:0.95rem;
+    line-height:1.05;
+    letter-spacing:0.02em;
+    transform:rotate(-10deg);
+    padding:0 8px;
+  }
+
+  .hero h1{
+    font-family:"Bebas Neue",sans-serif;
+    font-size:clamp(3rem, 8vw, 5.2rem);
+    line-height:0.98;
+    margin:0 0 22px;
+    max-width:820px;
+  }
+  .hero h1 .accent{color:var(--red);}
+  .hero p.lede{
+    max-width:560px;
+    color:var(--ink-soft);
+    font-size:1.1rem;
+    margin:0 0 34px;
+  }
+
+  .stat-strip{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(140px,1fr));
+    border:3px solid var(--ink);
+    margin-bottom:28px;
+    background:var(--ink);
+    gap:3px;
+    box-shadow:6px 6px 0 var(--ink);
+  }
+  .stat{background:var(--panel); padding:16px 18px;}
+  .stat .num{font-family:"IBM Plex Mono",monospace; color:var(--red); font-size:1.4rem; font-weight:600; display:block;}
+  .stat .label{color:var(--muted); font-size:12px; margin-top:4px;}
+
+  .contact-row{display:flex; flex-wrap:wrap; gap:10px;}
+  .pill{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:13px;
+    border:2px solid var(--ink);
+    padding:8px 14px;
+    text-decoration:none;
+    background:var(--panel);
+    transition:transform .12s, box-shadow .12s;
+  }
+  .pill:hover{ box-shadow:3px 3px 0 var(--ink); transform:translate(-3px,-3px); }
+
+  /* --- Section shell --- */
+  section{padding:52px 0;}
+
+  /* --- Experience: panel per job --- */
+  .job{margin-bottom:22px;}
+  .job:last-child{margin-bottom:0;}
+  .job-top{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:10px; margin-bottom:4px;}
+  .job h3{font-family:"Bebas Neue",sans-serif; font-size:1.7rem; margin:0; letter-spacing:0.01em;}
+  .job .when{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted);}
+  .job .when .status{color:var(--red); font-weight:600;}
+  .job .org{color:var(--indigo); font-weight:600; font-size:14.5px; margin-bottom:14px;}
+  .job ul{margin:0; padding-left:18px; color:var(--ink-soft); font-size:15px;}
+  .job li{margin-bottom:8px;}
+  .job li::marker{color:var(--red);}
+
+  /* --- Selected work: asymmetric two-panel --- */
+  .work-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  @media (max-width:720px){ .work-grid{grid-template-columns:1fr;} }
+  .work-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:10px;}
+  .work h3{font-family:"Bebas Neue",sans-serif; font-size:1.5rem; margin:0; line-height:1.05;}
+  .org-tag{
+    font-family:"IBM Plex Mono",monospace; font-size:11.5px;
+    background:var(--indigo); color:var(--paper);
+    padding:4px 9px; white-space:nowrap;
+  }
+  .work p{color:var(--ink-soft); font-size:14.5px; margin:0 0 16px;}
+  .impact{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
+  .impact span{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--red); border:1.5px solid var(--red); padding:4px 9px;}
+  .tags{display:flex; flex-wrap:wrap; gap:7px;}
+  .tags span{font-size:12px; color:var(--muted); border:1.5px solid var(--paper-2); background:var(--paper); padding:3px 9px; font-family:"IBM Plex Mono",monospace;}
+
+  /* --- Projects: 3-panel grid --- */
+  .proj-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:20px;}
+  .proj{background:var(--panel); border:3px solid var(--ink); box-shadow:5px 5px 0 var(--ink); padding:20px;}
+  .proj h3{font-family:"Bebas Neue",sans-serif; font-size:1.3rem; margin:0 0 10px;}
+  .proj p{color:var(--ink-soft); font-size:14px; margin:0 0 14px;}
+  .proj-link{display:inline-block; margin-top:6px; font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--red); text-decoration:none; border-bottom:2px solid var(--red);}
+
+  /* --- Skills --- */
+  .skill-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(210px,1fr)); gap:22px 28px;}
+  .skill-cat h3{
+    font-family:"Bebas Neue",sans-serif;
+    font-size:1.1rem; color:var(--indigo);
+    margin:0 0 8px; letter-spacing:0.01em;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:6px;
+  }
+  .skill-cat .items{color:var(--ink-soft); font-size:14px; line-height:1.85;}
+
+  /* --- Education --- */
+  .edu{display:grid; grid-template-columns:140px 1fr; gap:20px; padding:18px 0; border-top:2px solid var(--paper-2);}
+  .edu:first-of-type{border-top:none;}
+  .edu .when{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--muted);}
+  .edu h3{margin:0 0 4px; font-family:"Bebas Neue",sans-serif; font-size:1.25rem;}
+  .edu p{margin:0; color:var(--ink-soft); font-size:14.5px;}
+  @media (max-width:560px){ .edu{grid-template-columns:1fr;} }
+
+  /* --- Achievements --- */
+  .ach-list{list-style:none; margin:0; padding:0; display:grid; gap:12px;}
+  .ach-list li{display:grid; grid-template-columns:14px 1fr; gap:14px; color:var(--ink-soft); font-size:15px; align-items:baseline;}
+  .ach-list li::before{content:""; width:10px; height:10px; background:var(--red); align-self:center;}
+
+  /* --- Footer --- */
+  footer{padding:60px 0 90px;}
+  .closing-panel{background:var(--ink); color:var(--paper); padding:44px 32px; border:3px solid var(--ink); box-shadow:7px 7px 0 var(--red);}
+  .closing-panel h2{font-family:"Bebas Neue",sans-serif; font-size:clamp(2.2rem,6vw,3.2rem); margin:0 0 14px;}
+  .closing-panel p{color:#C7C6CE; max-width:460px; margin:0 0 28px;}
+  .closing-panel .pill{background:transparent; border-color:var(--paper); color:var(--paper);}
+  .closing-panel .pill:hover{box-shadow:3px 3px 0 var(--paper);}
+  .foot-links{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:8px;}
+  .colophon{
+    margin-top:30px; padding-top:20px; border-top:1px solid #3A3A42;
+    font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:#8A899490;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#top" class="nav-mark"><span class="dot"></span>DINESH BANDARU</a>
+  <div class="nav-links">
+    <a href="#experience">Experience</a>
+    <a href="#work">Selected Work</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<main>
+
+  <section class="hero" id="top">
+    <div class="burst-badge" aria-hidden="true">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <polygon fill="#D62839" stroke="#101014" stroke-width="4" points="100,4 118,42 158,26 152,68 194,78 162,106 186,142 144,136 138,178 104,154 68,182 58,140 16,144 36,106 4,82 44,70 34,28 76,40" />
+      </svg>
+      <div class="burst-text">2+ YRS<br/>SHIPPING<br/>PROD</div>
+    </div>
+    <div class="hero-inner">
+      <div class="chapter-tag"><span>PROFILE №01 — BACKEND ENGINEER</span></div>
+      <h1>Dinesh Bandaru builds backend systems that <span class="accent">hold up at scale</span>.</h1>
+      <p class="lede">Software Engineer with 3+ years shipping FastAPI &amp; Django microservices, event-driven data pipelines, and AI-powered features on Azure and AWS — currently at Walmart, previously at Microsoft.</p>
+
+      <div class="stat-strip">
+        <div class="stat"><span class="num">1.2M+</span><span class="label">daily API requests served</span></div>
+        <div class="stat"><span class="num">38%</span><span class="label">API response time cut</span></div>
+        <div class="stat"><span class="num">45%</span><span class="label">faster deployments</span></div>
+        <div class="stat"><span class="num">99.95%</span><span class="label">application availability</span></div>
+      </div>
+
+      <div class="contact-row">
+        <a class="pill" href="mailto:bandarudinesh02@gmail.com">bandarudinesh02@gmail.com</a>
+        <a class="pill" href="tel:+15107750230">(510) 775-0230</a>
+        <a class="pill" href="https://www.linkedin.com/in/dinesh-bandaru-976a3a23a" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="pill" href="https://github.com/BandaruDinesh" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="chapter-tag"><span>CH.01 — EXPERIENCE</span></div>
+    <div class="panel">
+      <div class="job">
+        <div class="job-top">
+          <h3>Software Engineer</h3>
+          <span class="when">DEC 2025 — <span class="status">PRESENT</span></span>
+        </div>
+        <div class="org">Walmart Inc., USA</div>
+        <ul>
+          <li>Built Python FastAPI &amp; Django microservices for omnichannel retail, inventory, merchandising, and fulfillment, cutting API response time 38% while serving 1.2M+ daily requests.</li>
+          <li>Shipped React.js/TypeScript interfaces over secure REST APIs, improving application performance 35% and customer interaction speed 30%.</li>
+          <li>Designed distributed services in Python, Java, Go, Kafka, Redis, PostgreSQL, and MongoDB for near real-time inventory sync across fulfillment centers at 99.9% data consistency.</li>
+          <li>Integrated Azure OpenAI, LangChain, and PyTorch for AI-powered product search and support automation, lifting recommendation accuracy 24% and cutting manual support volume 28%.</li>
+          <li>Automated deployments with Docker, Kubernetes, Azure, and CI/CD, reducing deployment time 45% at 99.95% availability.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="height:20px"></div>
+
+    <div class="panel">
+      <div class="job">
+        <div class="job-top">
+          <h3>Software Engineer</h3>
+          <span class="when">JUN 2022 — JUL 2024</span>
+        </div>
+        <div class="org">Microsoft, India</div>
+        <ul>
+          <li>Built enterprise web applications with Python, Django, Flask, and React.js, lifting user engagement 27%.</li>
+          <li>Developed secure REST APIs against Azure services, Microsoft Graph, PostgreSQL, and Cosmos DB, cutting backend processing time 32%.</li>
+          <li>Deployed Scikit-learn, TensorFlow, and Azure ML models for document classification and predictive analytics, improving accuracy 22%.</li>
+          <li>Containerized services with Docker and ran CI/CD via Azure DevOps, GitHub Actions, and Kubernetes, shortening release cycles 40%.</li>
+          <li>Partnered with PMs, UX, QA, and cloud architects in Agile teams to ship Azure &amp; Microsoft 365 solutions at 99.9% availability.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="chapter-tag"><span>CH.02 — SELECTED WORK</span></div>
+    <div class="work-grid">
+      <div class="panel">
+        <div class="work-top">
+          <h3>Enterprise Financial Fraud Detection &amp; Transaction Risk Platform</h3>
+          <span class="org-tag">WALMART</span>
+        </div>
+        <p>Cloud-native platform scoring banking and payment transactions for fraud risk in real time before authorization, combining microservices, ML, and GenAI over an event-driven Kafka backbone.</p>
+        <div class="impact">
+          <span>38% faster API</span>
+          <span>1.2M+ txns/day</span>
+          <span>24% better fraud accuracy</span>
+        </div>
+        <div class="tags">
+          <span>FastAPI</span><span>Kafka</span><span>Redis</span><span>PyTorch</span><span>Azure OpenAI</span><span>AKS</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="work-top">
+          <h3>Intelligent Document Management &amp; AI Classification Platform</h3>
+          <span class="org-tag">MICROSOFT</span>
+        </div>
+        <p>Cloud-native platform automating document ingestion, AI classification, metadata extraction, and search across SharePoint, OneDrive, Outlook, and Teams via Microsoft Graph.</p>
+        <div class="impact">
+          <span>27% more engagement</span>
+          <span>32% faster backend</span>
+          <span>22% better classification</span>
+        </div>
+        <div class="tags">
+          <span>Django</span><span>Graph API</span><span>TensorFlow</span><span>Azure ML</span><span>Cosmos DB</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="chapter-tag"><span>CH.03 — PROJECTS</span></div>
+    <div class="proj-grid">
+      <div class="proj">
+        <h3>AI Chatbot</h3>
+        <p>LLM-powered chatbot for real-time student support, using semantic search over a Milvus vector store to improve response accuracy.</p>
+        <div class="tags"><span>Python</span><span>LangChain</span><span>Mistral 7B</span><span>Milvus</span></div>
+        <a class="proj-link" href="https://github.com/DrAlzahraniProjects/csusb_fall2024_cse6550_team1" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+      <div class="proj">
+        <h3>AI-Powered Code Review Assistant</h3>
+        <p>Web app that analyzes source code, flags bugs, suggests optimizations, and explains code using an LLM, with a FastAPI backend and React dashboard.</p>
+        <div class="tags"><span>FastAPI</span><span>React.js</span><span>OpenAI API</span><span>PostgreSQL</span></div>
+        <a class="proj-link" href="https://github.com/BandaruDinesh/ai-code-review-assistant" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+      <div class="proj">
+        <h3>Smart Campus Resource Management System</h3>
+        <p>Full-stack app for classroom, lab, and equipment booking with real-time availability, role-based access, and automated notifications.</p>
+        <div class="tags"><span>Django</span><span>React.js</span><span>Redis</span><span>Azure</span></div>
+        <a class="proj-link" href="https://github.com/BandaruDinesh/Smart-Campus-Resource-Management-System" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="chapter-tag"><span>CH.04 — SKILLS</span></div>
+    <div class="skill-grid">
+      <div class="skill-cat"><h3>Languages</h3><div class="items">Python, Java, Go, C++, JavaScript, TypeScript, SQL</div></div>
+      <div class="skill-cat"><h3>Frontend</h3><div class="items">React.js, Next.js, HTML5, CSS3, Tailwind CSS, Bootstrap</div></div>
+      <div class="skill-cat"><h3>Backend</h3><div class="items">FastAPI, Django, Flask, Spring Boot, REST APIs, GraphQL, Microservices</div></div>
+      <div class="skill-cat"><h3>AI / ML</h3><div class="items">Azure OpenAI, OpenAI GPT, LangChain, PyTorch, Scikit-learn, TensorFlow, Hugging Face, MLflow</div></div>
+      <div class="skill-cat"><h3>Databases</h3><div class="items">PostgreSQL, MySQL, SQL Server, MongoDB, Redis, Cosmos DB</div></div>
+      <div class="skill-cat"><h3>Cloud</h3><div class="items">Microsoft Azure, AWS</div></div>
+      <div class="skill-cat"><h3>DevOps / CI-CD</h3><div class="items">Docker, Kubernetes, Git, GitHub Actions, Azure DevOps, Jenkins</div></div>
+      <div class="skill-cat"><h3>Messaging &amp; Distributed</h3><div class="items">Kafka, RabbitMQ</div></div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="chapter-tag"><span>CH.05 — EDUCATION</span></div>
+    <div class="edu">
+      <div class="when">2024—2026</div>
+      <div><h3>M.S. Computer Science</h3><p>California State University, San Bernardino, CA · August 2024 – May 2026</p></div>
+    </div>
+    <div class="edu">
+      <div class="when">2020—2024</div>
+      <div><h3>B.Tech, Computer Science</h3><p>Vignan's Institute of Information Technology · May 2024 · GPA 8.49/10</p></div>
+    </div>
+  </section>
+
+  <section id="achievements">
+    <div class="chapter-tag"><span>CH.06 — ACHIEVEMENTS</span></div>
+    <ul class="ach-list">
+      <li>National Hackathon Finalist — top team from 1,000+ applicants (Mar 2023)</li>
+      <li>CodeChef 2-Star Coder — peak rating 1471</li>
+      <li>1st Place, Short Film Contest at VIIT (Sep 2022)</li>
+      <li>NPTEL Certified — Python, Data Structures &amp; Algorithms, and Machine Learning (IIT Faculty)</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  <main>
+    <div class="closing-panel" id="contact">
+      <h2>Let's talk.</h2>
+      <p>Open to conversations about backend, cloud, and AI-systems roles. Reach out by email or connect on LinkedIn.</p>
+      <div class="foot-links">
+        <a class="pill" href="mailto:bandarudinesh02@gmail.com">bandarudinesh02@gmail.com</a>
+        <a class="pill" href="tel:+15107750230">(510) 775-0230</a>
+        <a class="pill" href="https://www.linkedin.com/in/dinesh-bandaru-976a3a23a" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="pill" href="https://github.com/BandaruDinesh" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div class="colophon">
+        <span>DINESH BANDARU — SOFTWARE ENGINEER</span>
+        <span>BUILT WITH HTML &amp; CSS · HOSTED ON GITHUB PAGES</span>
+      </div>
+    </div>
+  </main>
+</footer>
+
+</body>
+</html>
   body{
     margin:0;
     background:var(--paper);

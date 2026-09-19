@@ -63,7 +63,13 @@
     border:3px solid var(--ink);
     box-shadow:7px 7px 0 var(--ink);
     padding:28px;
+    transition:transform .15s ease, box-shadow .15s ease;
   }
+  .panel:hover{
+    transform:translate(-4px,-4px);
+    box-shadow:11px 11px 0 var(--ink);
+  }
+  .panel.panel-work:hover{ box-shadow:11px 11px 0 var(--indigo); }
 
   /* --- Chapter tag: motivated by the content actually being a sequence --- */
   .chapter-tag{
@@ -168,7 +174,8 @@
 
   /* --- Projects: 3-panel grid --- */
   .proj-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:20px;}
-  .proj{background:var(--panel); border:3px solid var(--ink); box-shadow:5px 5px 0 var(--ink); padding:20px;}
+  .proj{background:var(--panel); border:3px solid var(--ink); box-shadow:5px 5px 0 var(--ink); padding:20px; transition:transform .15s ease, box-shadow .15s ease;}
+  .proj:hover{ transform:translate(-4px,-4px); box-shadow:9px 9px 0 var(--red); }
   .proj h3{font-family:"Bebas Neue",sans-serif; font-size:1.3rem; margin:0 0 10px;}
   .proj p{color:var(--ink-soft); font-size:14px; margin:0 0 14px;}
   .proj-link{display:inline-block; margin-top:6px; font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--red); text-decoration:none; border-bottom:2px solid var(--red);}
@@ -293,7 +300,7 @@
   <section id="work">
     <div class="chapter-tag"><span>CH.02 — SELECTED WORK</span></div>
     <div class="work-grid">
-      <div class="panel">
+      <div class="panel panel-work">
         <div class="work-top">
           <h3>Enterprise Financial Fraud Detection &amp; Transaction Risk Platform</h3>
           <span class="org-tag">WALMART</span>
@@ -309,7 +316,7 @@
         </div>
       </div>
 
-      <div class="panel">
+      <div class="panel panel-work">
         <div class="work-top">
           <h3>Intelligent Document Management &amp; AI Classification Platform</h3>
           <span class="org-tag">MICROSOFT</span>
